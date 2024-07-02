@@ -1,0 +1,24 @@
+package mypackage;
+
+import java.sql.*;
+
+public class jp4 (
+
+public static void main(String[] args) ( Connection conn try ( null;
+
+Class.forName("con.mysql.cj.jdbc.Driver"); conn DriverManager.getConnection(
+
+"jdbc:mysql://localhost:3306/classicmodels/useSSL=false", "root", "password"); Statement stat conn.createStatement(); String SQL "update empnast set nobile- "email 'kalpeshp@aol.com where empno
+
+9824098242","
+
+102";
+
+int rowaffected stat.executeUpdate(SQL); if(rowaffected > 0) { System.out.println("Record updated
+
+successfully (");
+
+else ( System.out.println("Error in update 1"); conn.close();
+
+catch (Exception e) { System.out.println("Error:e.getMessage());
+

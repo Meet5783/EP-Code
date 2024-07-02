@@ -1,0 +1,14 @@
+/*Program to display all the records from emp table .*/
+package myPrac1;
+import java.sql.*;
+public class dbexample1 {
+
+	public static void main(String[] args) {
+		connection conn = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver")
+		}
+
+	}
+
+}

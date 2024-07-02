@@ -1,0 +1,115 @@
+package myPrac1;
+import java.sql.*;
+import java.util.*;
+/*CREATE TABLE crudstudent ( rollno int NOT NULL PRIMARY KEY, name varchar(40), mobile varchar(10)
+(
+}
+*/
+class DAOHandler {
+private int mrollno;
+private String mname, mmobile;
+Scanner scn = new Scanner(System.in);
+private Connection getDBConnection() {
+Connection conn = null;
+try {
+DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+String mysqlUrl =
+"jdbc:mysql://localhost:3306/classicmodels?useSSL=false";
+conn = DriverManager.getConnection(mysqlUrl, "root", "password");
+}
+catch (Exception e) {
+System.out.println("Connection Error :" + e.getMessage());
+}
+return conn;
+private void getData() {
+System.out.print("Enter the valid rollno :");
+mrolino = scn.nextInt();
+System.out.print("Enter the valid name:");
+mname = scn.next();
+System.out.print("Enter the valid mobile:");
+mmobile = scn.next();
+}
+private void getrollno() {
+System.out.print("Enter the valid rollno :");
+mrollno = scn.nextInt();
+}
+public int addRecord() throws Exception {
+int result = 0;
+Connection conn = null;
+try {
+conn = getDBConnection();
+getData();
+String SQL = "insert into CRUDStudent values(?,?,?)";
+PreparedStatement pstmt = conn.prepareStatement(SQL);
+pstmt.setInt(1, mrollno); pstmt.setString(2, mname);
+pstmt.setString(3, mmobile);
+result = pstmt.executeUpdate();
+}
+catch (Exception e) {
+System.out.println("Insert Error :" + e.getMessage());
+}
+conn.close();
+return result;
+}
+public void editRecord() throws Exception {
+getrollno();
+Connection conn = null;
+PreparedStatement pstmt;
+boolean flag = false;
+try {
+conn = getDBConnection();
+pstmt = conn.prepareStatement(
+"select * from CRUDStudent where rollno = ?");
+pstmt.setInt(1, mrollno);
+ResultSet result = pstmt.executeQuery();
+while(result.next()) {
+flag= true;
+System.out.println("Student Name:" + result.getString(2));
+System.out.println("Student Mobile:" + result.getString(3));
+}
+if(flag) {
+System.out.println("Enter data to be update");
+System.out.println("- --");
+System.out.print("Enter the valid name:");
+mname = scn.next();
+System.out.print("Enter the valid mobile :");
+mmobile = scn.next();
+pstmt = conn.prepareStatement
+("update crudStudent set name=?, mobile=? where rollno=?");
+pstmt.setString(1, mname);
+pstmt.setString(2, mmobile);
+pstmt.setInt(3, mrollno);
+pstmt.executeUpdate();
+System.out.println("Record updated!");
+}
+else
+{
+}
+System.out.println("Record not found, Try later !");
+}
+catch (Exception e) {
+System.out.println("Edit error:" + e.getMessage());
+}
+}
+public void deleteRecord() throws Exception {
+getrollno();
+Connection conn = null;
+PreparedStatement pstmt = null;
+boolean flag = false;
+try {
+conn = getDBConnection();
+pstmt = conn.prepareStatement(
+"select * from CRUDStudent where rollno = ?");
+pstmt.setInt(1, mrollno);
+ResultSet result = pstmt.executeQuery();
+while(result.next()) {
+flag= true;
+pstmt = conn.prepareStatement(
+"delete from CRUDStudent where rollno = ?");
+pstmt.setInt(1, mrollno);
+pstmt.executeUpdate();
+System.out.println("Record Deleted!");
+}
+if(!flag)
+System.out.println("Record not found, Try later!");
+}
